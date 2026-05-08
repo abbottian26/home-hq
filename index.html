@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Home HQ">
+<meta name="theme-color" content="#1a56a8">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>3900 Johnson — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdf8f0;--warm-white:#fffdf9;--paper:#faf5eb;--border:#e8dfc8;--border2:#d4c9b0;--ink:#2d2416;--ink2:#6b5c42;--ink3:#a8957a;--ink4:#c9b899;--accent:#e07b3a;--red:#d94f4f;--red-soft:#fdf0f0;--red-border:#f5c5c5;--yellow:#c9861a;--yellow-soft:#fdf6e8;--yellow-border:#f0dba8;--green:#4a8c5c;--green-soft:#f0f7f2;--green-border:#b8d9c3;--blue:#3a7ab0;--blue-soft:#f0f5fc;--blue-border:#b8d0ee;--shadow:rgba(45,36,22,0.06);--shadow2:rgba(45,36,22,0.12);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);color:var(--ink);font-family:'Nunito',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
+.header{background:var(--warm-white);border-bottom:2px solid var(--border);padding:18px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px var(--shadow);}
+.house-icon{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.header-title{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--ink);}
+.header-title span{color:var(--accent);font-style:italic;}
+.header-sub{font-size:12px;color:var(--ink3);font-weight:600;}
+.header-date{margin-left:auto;font-size:12px;color:var(--ink3);font-weight:700;background:var(--paper);border:1px solid var(--border);padding:5px 12px;border-radius:20px;}
+.nav{background:var(--warm-white);border-bottom:2px solid var(--border);padding:0 28px;display:flex;gap:4px;overflow-x:auto;}
+.nav-tab{padding:12px 18px;font-size:13px;font-weight:700;color:var(--ink3);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all 0.15s;position:relative;top:2px;white-space:nowrap;font-family:'Nunito',sans-serif;}
+.nav-tab:hover{color:var(--ink2);}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.main{padding:28px 32px;max-width:1100px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:0 2px 8px var(--shadow);}
+.sc-label{font-size:11px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
+.sc-value{font-family:'Lora',serif;font-size:36px;line-height:1;font-weight:600;color:var(--ink);}
+.sc-value.danger{color:var(--red);}
+.sc-value.warn{color:var(--yellow);}
+.sc-value.good{color:var(--green);}
+.sc-value.accent{color:var(--accent);font-size:28px;}
+.sc-sub{font-size:12px;color:var(--ink3);margin-top:5px;font-weight:600;}
+.banner{border-radius:14px;padding:14px 18px;margin-bottom:14px;display:flex;gap:14px;align-items:flex-start;}
+.banner.blue{background:var(--blue-soft);border:1.5px solid var(--blue-border);}
+.banner.yellow{background:var(--yellow-soft);border:1.5px solid var(--yellow-border);}
+.banner.green{background:var(--green-soft);border:1.5px solid var(--green-border);}
+.bn-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.bn-title{font-size:13px;font-weight:800;margin-bottom:3px;}
+.banner.blue .bn-title{color:var(--blue);}
+.banner.yellow .bn-title{color:var(--yellow);}
+.banner.green .bn-title{color:var(--green);}
+.bn-body{font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.6;}
+.bn-body strong{color:var(--ink);}
+.section-head{display:flex;align-items:center;gap:12px;margin:28px 0 14px;}
+.section-head:first-of-type{margin-top:0;}
+.section-badge{font-size:11px;font-weight:800;letter-spacing:0.7px;text-transform:uppercase;padding:4px 12px;border-radius:20px;flex-shrink:0;}
+.section-badge.high{background:var(--red-soft);color:var(--red);border:1.5px solid var(--red-border);}
+.section-badge.medium{background:var(--yellow-soft);color:var(--yellow);border:1.5px solid var(--yellow-border);}
+.section-badge.low{background:var(--green-soft);color:var(--green);border:1.5px solid var(--green-border);}
+.section-line{flex:1;height:1.5px;background:var(--border);border-radius:2px;}
+.items-list{display:flex;flex-direction:column;gap:8px;}
+.item-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:14px;padding:14px 18px;cursor:pointer;transition:all 0.15s;box-shadow:0 1px 4px var(--shadow);}
+.item-card:hover{border-color:var(--border2);box-shadow:0 3px 10px var(--shadow2);}
+.item-card.high{border-left:4px solid var(--red);}
+.item-card.medium{border-left:4px solid var(--yellow);}
+.item-card.low{border-left:4px solid var(--green);}
+.item-top{display:grid;grid-template-columns:24px 1fr auto auto auto;align-items:center;gap:10px;}
+.item-cb{width:18px;height:18px;border-radius:5px;border:2px solid var(--border2);background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;pointer-events:all;flex-shrink:0;}
+.item-cb:hover{border-color:var(--green);}
+.item-cb.checked{background:var(--green);border-color:var(--green);color:white;font-size:11px;font-weight:800;}
+.item-name{font-size:14px;font-weight:800;color:var(--ink);}
+.item-snippet{font-size:12.5px;color:var(--ink3);margin-top:3px;font-weight:600;}
+.pill{font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;}
+.pill.diy{background:var(--green-soft);color:var(--green);border:1.5px solid var(--green-border);}
+.pill.contractor{background:var(--blue-soft);color:var(--blue);border:1.5px solid var(--blue-border);}
+.pill.timeline{background:var(--paper);color:var(--ink2);border:1.5px solid var(--border);}
+.pill.timeline.urgent{background:var(--red-soft);color:var(--red);border-color:var(--red-border);}
+.pill.timeline.soon{background:var(--yellow-soft);color:var(--yellow);border-color:var(--yellow-border);}
+.cost-pill{font-size:12px;font-weight:800;color:var(--ink2);white-space:nowrap;}
+.item-detail-body{display:none;margin-top:12px;padding-top:12px;border-top:1.5px dashed var(--border);font-size:13px;color:var(--ink2);line-height:1.7;font-weight:600;}
+.item-card.expanded .item-detail-body{display:block;}
+/* ROOF */
+.roof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.roof-stat{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+.roof-stat-label{font-size:10px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:4px;}
+.roof-stat-value{font-size:15px;font-weight:800;color:var(--ink);}
+.roof-stat-value.good{color:var(--green);}
+.roof-stat-value.warn{color:var(--yellow);}
+.roof-stat-value.big{color:var(--red);}
+.roof-contractors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+.contractor-card{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+.cc-name{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:4px;}
+.cc-detail{font-size:12px;color:var(--ink2);font-weight:600;line-height:1.5;}
+.cc-phone{font-size:11px;font-weight:800;color:var(--blue);margin-top:6px;}
+.ns-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:13px;color:var(--ink2);font-weight:600;}
+.ns-item:last-child{border-bottom:none;padding-bottom:0;}
+.ns-cb{width:16px;height:16px;border-radius:4px;border:2px solid var(--border2);background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all 0.15s;flex-shrink:0;margin-top:2px;}
+.ns-cb:hover{border-color:var(--green);}
+.ns-cb.checked{background:var(--green);border-color:var(--green);color:white;}
+/* SEASONAL */
+.season-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+.season-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 2px 8px var(--shadow);}
+.season-header{padding:14px 20px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
+.season-header.spring{background:linear-gradient(135deg,#f0f9f0,#e8f5e8);}
+.season-header.summer{background:linear-gradient(135deg,#fdf8e8,#fdf0d4);}
+.season-header.fall{background:linear-gradient(135deg,#fdf2e8,#fde8d4);}
+.season-header.winter{background:linear-gradient(135deg,#f0f4fc,#e8f0f8);}
+.season-emoji{font-size:22px;}
+.season-title-text{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--ink);}
+.now-badge{margin-left:auto;font-size:10px;font-weight:800;text-transform:uppercase;background:var(--accent);color:white;padding:3px 9px;border-radius:20px;}
+.season-tasks{padding:10px 20px 14px;}
+.season-task{padding:9px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:22px 1fr auto auto;gap:8px;align-items:start;}
+.season-task:last-child{border-bottom:none;padding-bottom:0;}
+.stcb{width:16px;height:16px;border-radius:4px;border:2px solid var(--border2);background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all 0.15s;margin-top:2px;flex-shrink:0;}
+.stcb:hover{border-color:var(--green);}
+.stcb.checked{background:var(--green);border-color:var(--green);color:white;}
+.st-name{font-size:13px;font-weight:800;color:var(--ink);}
+.st-why{font-size:11.5px;color:var(--ink3);margin-top:2px;line-height:1.4;font-weight:600;}
+.st-cost{font-size:11px;font-weight:800;color:var(--ink2);white-space:nowrap;padding-top:2px;}
+/* SYSTEMS */
+.systems-wrap{background:var(--warm-white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 2px 8px var(--shadow);}
+.sys-table{width:100%;border-collapse:collapse;}
+.sys-table th{font-size:10px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink3);padding:12px 16px;text-align:left;background:var(--paper);border-bottom:1.5px solid var(--border);}
+.sys-table td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink2);vertical-align:middle;font-weight:600;}
+.sys-table tr:last-child td{border-bottom:none;}
+.sys-table tr:hover td{background:var(--cream);}
+.sys-table td.sys-name{font-weight:800;color:var(--ink);}
+.hbar{width:72px;height:6px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:3px;}
+.hfill{height:100%;border-radius:4px;}
+.hfill.good{background:var(--green);}
+.hfill.med{background:var(--yellow);}
+.hfill.poor{background:var(--red);}
+.hlabel{font-size:11px;font-weight:700;}
+.hlabel.good{color:var(--green);}
+.hlabel.med{color:var(--yellow);}
+.hlabel.poor{color:var(--red);}
+/* COSTS */
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px;}
+.cost-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 2px 8px var(--shadow);}
+.cost-card-head{padding:14px 20px;background:var(--paper);border-bottom:1.5px solid var(--border);font-family:'Lora',serif;font-size:16px;font-weight:600;color:var(--ink);}
+.cost-lines{padding:8px 20px 14px;}
+.cost-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px;}
+.cost-row:last-child{border-bottom:none;}
+.cost-label{color:var(--ink2);font-weight:600;}
+.cost-val{font-weight:800;color:var(--ink);}
+.cost-val.free{color:var(--green);}
+.cost-val.big{color:var(--red);}
+.cost-val.accent{color:var(--accent);font-size:15px;}
+.lumpy-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px;box-shadow:0 1px 4px var(--shadow);}
+.lumpy-name{font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px;}
+.lumpy-desc{font-size:12.5px;color:var(--ink3);font-weight:600;line-height:1.5;margin-bottom:8px;}
+.lumpy-chips{display:flex;gap:8px;flex-wrap:wrap;}
+.lumpy-chip{font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;background:var(--paper);color:var(--ink2);border:1.5px solid var(--border);}
+.lumpy-chip.highlight{background:var(--yellow-soft);color:var(--yellow);border-color:var(--yellow-border);}
+.lumpy-chip.good{background:var(--green-soft);color:var(--green);border-color:var(--green-border);}
+.lumpy-chip.flag{background:var(--red-soft);color:var(--red);border-color:var(--red-border);}
+/* CLOSED */
+.closed-item{display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--warm-white);border:1.5px solid var(--green-border);border-radius:12px;margin-bottom:8px;opacity:0.75;}
+.closed-check{width:22px;height:22px;border-radius:50%;background:var(--green-soft);border:1.5px solid var(--green-border);color:var(--green);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.closed-name{font-size:13px;font-weight:700;color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--ink4);}
+.closed-date{margin-left:auto;font-size:11px;font-weight:700;color:var(--ink3);white-space:nowrap;background:var(--green-soft);padding:3px 9px;border-radius:20px;border:1px solid var(--green-border);}
+.empty{padding:28px;text-align:center;color:var(--ink4);font-size:13px;font-weight:700;border:2px dashed var(--border);border-radius:14px;}
+.info-note{background:var(--yellow-soft);border:1.5px solid var(--yellow-border);border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--ink2);font-weight:600;margin-bottom:16px;}
+/* TOOLTIPS */
+.tooltip-wrap{position:relative;display:inline-block;}
+.tooltip-btn{font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px;background:var(--paper);border:1.5px solid var(--border2);color:var(--ink3);cursor:default;transition:all 0.15s;white-space:nowrap;vertical-align:middle;margin-left:6px;}
+.tooltip-btn:hover{background:var(--accent);border-color:var(--accent);color:white;}
+.tooltip-btn.active{background:var(--accent);border-color:var(--accent);color:white;}
+#tt-global{display:none;position:fixed;z-index:9999;background:#2d2416;color:#f5f0e8;font-size:12px;font-weight:600;line-height:1.65;padding:11px 14px;border-radius:10px;width:280px;max-width:calc(100vw - 24px);box-shadow:0 6px 24px rgba(0,0,0,0.4);pointer-events:none;}
+/* PRODUCT DROPDOWN */
+.prod-dropdown{display:none;margin-top:8px;background:var(--blue-soft);border:1.5px solid var(--blue-border);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.7;position:relative;}
+.prod-dropdown.open{display:block;}
+.prod-dropdown-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--blue-border);}
+.prod-dropdown-title{font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:var(--blue);}
+.prod-copy-btn{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blue-soft);border:1.5px solid var(--blue-border);color:var(--blue);cursor:pointer;transition:all 0.15s;}
+.prod-copy-btn:hover{background:var(--blue);color:white;}
+.prod-copy-btn.copied{background:var(--green);border-color:var(--green);color:white;}
+@media(max-width:860px){
+  .summary-row,.roof-grid{grid-template-columns:1fr 1fr;}
+  .season-grid,.cost-grid,.roof-contractors{grid-template-columns:1fr;}
+  .item-top{grid-template-columns:24px 1fr auto;}
+  .item-top .pill.timeline,.item-top .cost-pill{display:none;}
+  .main,.header,.nav{padding-left:16px;padding-right:16px;}
+}
+</style>
+</head>
+<body>
+<div id="tt-global"></div>
+<div class="header">
+  <div class="house-icon">🏡</div>
+  <div>
+    <div class="header-title">3900 <span>Johnson Ave</span></div>
+    <div class="header-sub">Western Springs, IL &nbsp;·&nbsp; Built 1950 &nbsp;·&nbsp; 2,882 sq ft</div>
+  </div>
+  <div class="header-date" id="current-date"></div>
+</div>
+<div class="nav">
+  <button class="nav-tab active" onclick="switchTab('dashboard',this)">🗒 Dashboard</button>
+  <button class="nav-tab" onclick="switchTab('roof',this)">🏠 Roof / Insurance</button>
+  <button class="nav-tab" onclick="switchTab('seasonal',this)">🌤 Seasonal</button>
+  <button class="nav-tab" onclick="switchTab('systems',this)">🔧 Systems</button>
+  <button class="nav-tab" onclick="switchTab('costs',this)">💰 Costs</button>
+  <button class="nav-tab" onclick="switchTab('closed',this)">✅ Closed</button>
+</div>
+<div class="main">
+
+<!-- DASHBOARD -->
+<div id="panel-dashboard" class="panel active">
+  <div class="summary-row">
+    <div class="stat-card"><div class="sc-label">Open Items</div><div class="sc-value danger" id="stat-open">—</div><div class="sc-sub" id="stat-high-sub"></div></div>
+    <div class="stat-card"><div class="sc-label">Due This Spring</div><div class="sc-value warn" id="stat-spring">—</div><div class="sc-sub">Priority items right now</div></div>
+    <div class="stat-card"><div class="sc-label">Est. Spend This Year</div><div class="sc-value accent">$3–6k</div><div class="sc-sub">Excl. potential roof claim</div></div>
+    <div class="stat-card"><div class="sc-label">Completed</div><div class="sc-value good" id="stat-closed">—</div><div class="sc-sub">Since move-in</div></div>
+  </div>
+  <div class="banner yellow">
+    <div class="bn-icon">🏠</div>
+    <div>
+      <div class="bn-title">Roof Insurance Claim — In Progress</div>
+      <div class="bn-body">Roof installed 2005 (21 yrs). Hail/wind on <strong>March 10, March 30, and April 17, 2026</strong>. AK Roofing quoted <strong>$13,200</strong> (shingle roof only). You have <strong>RCV coverage</strong> — best possible. Wind/hail deductible: <strong>$8,992</strong>. Style Exteriors scheduled; Calderone Roofing to schedule. See <strong>Roof / Insurance tab</strong> for full detail and next steps checklist.</div>
+    </div>
+  </div>
+  <div class="banner blue">
+    <div class="bn-icon">🛡️</div>
+    <div>
+      <div class="bn-title">HVAC Warranty — Annual Service Required</div>
+      <div class="bn-body">10-year parts + 5-year labor warranty. Leslie's service agreement covers annual tune-ups through <strong>Dec 2030 at no cost</strong>. After that, book a licensed contractor annually through <strong>Dec 2035</strong> to keep the warranty valid. Confirm: <strong>was the system registered with Rheem within 90 days of the Dec 2025 install?</strong> Call Leslie at 630-985-9800.</div>
+    </div>
+  </div>
+  <div class="section-head"><span class="section-badge high">🔴 High Priority</span><div class="section-line"></div></div>
+  <div class="items-list" id="list-high"></div>
+  <div class="section-head"><span class="section-badge medium">🟡 Medium Priority</span><div class="section-line"></div></div>
+  <div class="items-list" id="list-medium"></div>
+  <div class="section-head"><span class="section-badge low">🟢 Low / Monitor</span><div class="section-line"></div></div>
+  <div class="items-list" id="list-low"></div>
+</div>
+
+<!-- ROOF TAB -->
+<div id="panel-roof" class="panel">
+  <div style="background:var(--warm-white);border:1.5px solid var(--yellow-border);border-radius:18px;overflow:hidden;box-shadow:0 2px 8px var(--shadow);margin-bottom:20px;">
+    <div style="background:var(--yellow-soft);border-bottom:1.5px solid var(--yellow-border);padding:14px 20px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:22px;">🏠</span>
+      <span style="font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--ink);">Roof Status &amp; Insurance Claim</span>
+      <span style="margin-left:auto;font-size:11px;font-weight:800;text-transform:uppercase;background:var(--yellow);color:white;padding:3px 10px;border-radius:20px;">In Progress</span>
+    </div>
+    <div style="padding:16px 20px;">
+      <div class="roof-grid">
+        <div class="roof-stat"><div class="roof-stat-label">Install Year</div><div class="roof-stat-value warn">2005 (21 yrs)</div></div>
+        <div class="roof-stat"><div class="roof-stat-label">Coverage Type</div><div class="roof-stat-value good">RCV — best case ✓</div></div>
+        <div class="roof-stat"><div class="roof-stat-label">Wind/Hail Deductible</div><div class="roof-stat-value big">$8,992</div></div>
+        <div class="roof-stat"><div class="roof-stat-label">AK Roofing Estimate</div><div class="roof-stat-value">$13,200 (shingles only)</div></div>
+        <div class="roof-stat"><div class="roof-stat-label">Ordinance/Law Coverage</div><div class="roof-stat-value good">$89,920 ✓</div></div>
+        <div class="roof-stat"><div class="roof-stat-label">Other Structures</div><div class="roof-stat-value good">$89,920 (garage) ✓</div></div>
+      </div>
+      <div style="background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;">Key Facts</div>
+        <div style="font-size:13px;color:var(--ink2);font-weight:600;line-height:1.9;">
+          ✅ <strong style="color:var(--ink)">RCV coverage</strong> — State Farm pays today's replacement cost, not depreciated. Huge on a 21-yr-old roof.<br>
+          ✅ <strong style="color:var(--ink)">Storm events documented</strong> — Hail/wind March 10, March 30, April 17, 2026 in Western Springs.<br>
+          ✅ <strong style="color:var(--ink)">Flat roof inspected — newer, good condition</strong>, not part of the claim.<br>
+          ✅ <strong style="color:var(--ink)">Single claim won't raise premiums</strong> — confirmed by your State Farm agent.<br>
+          ✅ <strong style="color:var(--ink)">You've owned the home &lt;2 months when storms hit</strong> — zero maintenance deferral argument possible.<br>
+          ⚠️ <strong style="color:var(--ink)">Garage roof not yet inspected</strong> — separate $89,920 Other Structures limit. Ask every contractor.<br>
+          ⚠️ <strong style="color:var(--ink)">Gutters + skylight</strong> — fall under Coverage A if storm damage documented. Ask contractors to specifically assess both.<br>
+          ⚠️ <strong style="color:var(--ink)">Ordinance/Law endorsement</strong> — covers code-required upgrades on 1950 home. Tell contractors to include code items in scope.<br>
+          ⚠️ <strong style="color:var(--ink)">Mortgage co-payee</strong> — Union Home Mortgage will be on the check. Contractors know this — just coordinate with lender to endorse/release funds.<br>
+          ⚠️ <strong style="color:var(--ink)">Do NOT let a contractor initiate the claim</strong> — you call State Farm yourself if you decide to file.
+        </div>
+      </div>
+      <div class="roof-contractors">
+        <div class="contractor-card">
+          <div class="cc-name">AK Roofing &amp; Gutters — Kenny Nuredini</div>
+          <div class="cc-detail">Estimate: $13,200 (shingle roof only). CertainTeed certified. Cash contract — 50% deposit upfront. Photos document granule loss, shingle lifting, gutter debris. Has NOT yet assessed garage roof, gutters, or skylight for storm damage.</div>
+          <div class="cc-phone">📞 708-575-4500 &nbsp;·&nbsp; info@akroof.com</div>
+        </div>
+        <div class="contractor-card">
+          <div class="cc-name">Royal Reserve Roofing — Kevin Pastrano</div>
+          <div class="cc-detail">Contingency agreement structure — <strong>NOT signed</strong>. No financial exposure. Company opened Jul 2024, BBB A-. No itemized written estimate provided yet. Get full written scope + dollar amount before signing anything.</div>
+          <div class="cc-phone">📞 630-400-4638 &nbsp;·&nbsp; KP@RoyalReserveRoofing.com</div>
+        </div>
+        <div class="contractor-card">
+          <div class="cc-name">Style Exteriors — Todd Kruger</div>
+          <div class="cc-detail"><strong>State Farm-referred.</strong> Scheduled for inspection. They work regularly with State Farm adjusters — will give honest pre-claim read on damage and expected approval amount.</div>
+          <div class="cc-phone">📞 708-631-1570</div>
+        </div>
+        <div class="contractor-card">
+          <div class="cc-name">Calderone Roofing — Jim Calderone</div>
+          <div class="cc-detail"><strong>State Farm-referred.</strong> Schedule inspection. Second opinion from someone who knows State Farm approval patterns. Get both out before deciding whether to file.</div>
+          <div class="cc-phone">📞 708-596-0955</div>
+        </div>
+      </div>
+      <div style="margin-top:18px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;">Next Steps — Check Off as You Go</div>
+        <div class="ns-item"><div class="ns-cb" id="rs1" onclick="toggleNS('rs1')"></div><div><strong>Style Exteriors inspection</strong> — ask specifically about garage roof, gutters, skylight storm damage, and what State Farm typically approves.</div></div>
+        <div class="ns-item"><div class="ns-cb" id="rs2" onclick="toggleNS('rs2')"></div><div><strong>Schedule Calderone Roofing</strong> — call 708-596-0955, get their pre-claim read.</div></div>
+        <div class="ns-item"><div class="ns-cb" id="rs3" onclick="toggleNS('rs3')"></div><div><strong>Call AK Roofing (Kenny 708-575-4500)</strong> — "Based on your inspection, did you observe storm damage to the garage roof, gutters, or skylight?" Also ask about Ordinance/Law code items.</div></div>
+        <div class="ns-item"><div class="ns-cb" id="rs4" onclick="toggleNS('rs4')"></div><div><strong>Decide whether to open the State Farm claim</strong> — after hearing from Style Exteriors and Calderone. Math works if approval comfortably exceeds $8,992.</div></div>
+        <div class="ns-item"><div class="ns-cb" id="rs5" onclick="toggleNS('rs5')"></div><div><strong>If filing — call State Farm yourself:</strong> "I'm reporting potential storm damage from March/April 2026 hail events and requesting an adjuster inspection."</div></div>
+        <div class="ns-item"><div class="ns-cb" id="rs6" onclick="toggleNS('rs6')"></div><div><strong>Document roof condition with photos</strong> — important baseline for claim and future disputes.</div></div>
+        <div class="ns-item"><div class="ns-cb" id="rs7" onclick="toggleNS('rs7')"></div><div><strong>Verify Rheem warranty registration</strong> — call Leslie 630-985-9800 or check rheem.com/warranties with your serial number.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="banner green">
+    <div class="bn-icon">✅</div>
+    <div>
+      <div class="bn-title">What's Already in Good Shape</div>
+      <div class="bn-body">Flat roof — newer, inspected, good condition, not part of claim. Royal Reserve NOT signed — no financial exposure. Single claim won't raise premiums (confirmed). You have RCV not ACV. You owned the home less than 2 months when storms hit.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEASONAL -->
+<div id="panel-seasonal" class="panel">
+  <div class="info-note">💡 Check each box as you complete it — saves in your browser.</div>
+  <div class="season-grid">
+    <div class="season-card"><div class="season-header spring"><span class="season-emoji">🌱</span><span class="season-title-text">Spring</span><span class="now-badge">NOW</span></div><div class="season-tasks" id="st-spring"></div></div>
+    <div class="season-card"><div class="season-header summer"><span class="season-emoji">☀️</span><span class="season-title-text">Summer</span></div><div class="season-tasks" id="st-summer"></div></div>
+    <div class="season-card"><div class="season-header fall"><span class="season-emoji">🍂</span><span class="season-title-text">Fall</span><span style="margin-left:auto;font-size:11px;font-weight:800;color:var(--accent);">Most Critical</span></div><div class="season-tasks" id="st-fall"></div></div>
+    <div class="season-card"><div class="season-header winter"><span class="season-emoji">❄️</span><span class="season-title-text">Winter</span></div><div class="season-tasks" id="st-winter"></div></div>
+  </div>
+</div>
+
+<!-- SYSTEMS -->
+<div id="panel-systems" class="panel">
+  <div class="systems-wrap">
+    <table class="sys-table">
+      <thead><tr><th>System</th><th>Age</th><th>Lifespan</th><th>Health</th><th>Next Action</th></tr></thead>
+      <tbody>
+        <tr><td class="sys-name">HVAC — Furnace<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Rheem R802V · 10-yr parts / 5-yr labor · Lifetime heat exchanger</span></td><td>New (Dec 2025)</td><td>20–25 yrs</td><td><div class="hbar"><div class="hfill good" style="width:100%"></div></div><div class="hlabel good">New</div></td><td>Fall tune-up via Leslie (covered through 2030)</td></tr>
+        <tr><td class="sys-name">HVAC — Heat Pump/AC<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Rheem RD16AY48, 4-ton, 17 SEER2</span></td><td>New (Dec 2025)</td><td>15–20 yrs</td><td><div class="hbar"><div class="hfill good" style="width:100%"></div></div><div class="hlabel good">New</div></td><td>Condensate pan this spring; annual service required</td></tr>
+        <tr><td class="sys-name">HVAC — Humidifier + Air Purifier</td><td>New (Dec 2025)</td><td>10–15 yrs</td><td><div class="hbar"><div class="hfill good" style="width:100%"></div></div><div class="hlabel good">New</div></td><td>Service water panel each fall</td></tr>
+        <tr><td class="sys-name">Water Heater<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Bradford White, 40 gal, gas</span></td><td>~2021 (~4 yrs)</td><td>12 yrs</td><td><div class="hbar"><div class="hfill good" style="width:65%"></div></div><div class="hlabel good">~8 yrs left</div></td><td>Inspect pipe connections (rust noted at inspection)</td></tr>
+        <tr><td class="sys-name">Roof — Shingles<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Asphalt · 2005 · Insurance claim in progress · RCV coverage</span></td><td>2005 (21 yrs)</td><td>15–30 yrs</td><td><div class="hbar"><div class="hfill med" style="width:35%"></div></div><div class="hlabel med">Claim in progress</div></td><td style="color:var(--yellow);font-weight:800;">See Roof / Insurance tab</td></tr>
+        <tr><td class="sys-name">Roof — Flat Section<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Newer, inspected, good condition</span></td><td>Recent</td><td>15–20 yrs</td><td><div class="hbar"><div class="hfill good" style="width:85%"></div></div><div class="hlabel good">Good</div></td><td>Monitor — not part of insurance claim</td></tr>
+        <tr><td class="sys-name">Attic Insulation — 2nd Floor<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Updated pre-move-in 2025</span></td><td>2025</td><td>20–30 yrs</td><td><div class="hbar"><div class="hfill good" style="width:95%"></div></div><div class="hlabel good">New</div></td><td>Monitor — no action needed</td></tr>
+        <tr><td class="sys-name">Plumbing — Supply (Galvanized)<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Original 1950 galvanized visible</span></td><td>~1950 (75 yrs)</td><td>Past end of life</td><td><div class="hbar"><div class="hfill poor" style="width:18%"></div></div><div class="hlabel poor">Plan repipe</div></td><td style="color:var(--red);font-weight:800;">Plumber eval + phased repipe plan this year</td></tr>
+        <tr><td class="sys-name">Plumbing — Sewer Main</td><td>~1950</td><td>Monitor</td><td><div class="hbar"><div class="hfill good" style="width:80%"></div></div><div class="hlabel good">Clean at closing</div></td><td>Re-scope in ~5 yrs</td></tr>
+        <tr><td class="sys-name">Anti-Flood System</td><td>Unknown</td><td>Monitor</td><td><div class="hbar"><div class="hfill med" style="width:60%"></div></div><div class="hlabel med">Unverified</div></td><td>Inspect + confirm operation this year</td></tr>
+        <tr><td class="sys-name">Fireplace + Chimney<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Liner installed pre-closing · Safe to use</span></td><td>Liner: 2025</td><td>Indefinite w/ maint.</td><td><div class="hbar"><div class="hfill good" style="width:90%"></div></div><div class="hlabel good">Safe to use</div></td><td>Annual sweep — fall, before first fire</td></tr>
+        <tr><td class="sys-name">Foundation<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Efflorescence + west wall stains (dry at inspection)</span></td><td>1950 (75 yrs)</td><td>Indefinite w/ maint.</td><td><div class="hbar"><div class="hfill med" style="width:65%"></div></div><div class="hlabel med">Monitor west wall</div></td><td>Seal + waterproof this spring</td></tr>
+        <tr><td class="sys-name">Electrical<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">All outlets grounded · Garage GFCI completed</span></td><td>Updated 2025</td><td>Monitor</td><td><div class="hbar"><div class="hfill good" style="width:85%"></div></div><div class="hlabel good">Up to date</div></td><td>Monitor panel — no action needed</td></tr>
+        <tr><td class="sys-name">Washer<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Kenmore front-load · mold at gasket</span></td><td>~2007–2013</td><td>Past end of life</td><td><div class="hbar"><div class="hfill poor" style="width:12%"></div></div><div class="hlabel poor">Replace now</div></td><td style="color:var(--red);font-weight:800;">Replace this year — pair with dryer</td></tr>
+        <tr><td class="sys-name">Dryer<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Kenmore front-load, matching pair</span></td><td>~2007–2013</td><td>Past end of life</td><td><div class="hbar"><div class="hfill poor" style="width:18%"></div></div><div class="hlabel poor">Replace with washer</div></td><td>Replace at same time as washer</td></tr>
+        <tr><td class="sys-name">Toilets<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Kohler, replaced throughout pre-move-in</span></td><td>2025</td><td>Indefinite w/ maint.</td><td><div class="hbar"><div class="hfill good" style="width:100%"></div></div><div class="hlabel good">New</div></td><td>No action needed</td></tr>
+        <tr><td class="sys-name">Refrigerator<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Whirlpool Gold Series, French door</span></td><td>~2010–2015</td><td>14–17 yrs</td><td><div class="hbar"><div class="hfill med" style="width:42%"></div></div><div class="hlabel med">Back half of life</div></td><td>Budget replacement in 3–5 yrs</td></tr>
+        <tr><td class="sys-name">Range<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">GE gas, stainless freestanding</span></td><td>~2013–2017</td><td>15–20 yrs</td><td><div class="hbar"><div class="hfill good" style="width:62%"></div></div><div class="hlabel good">5–10 yrs left</div></td><td>Monitor — no action needed</td></tr>
+        <tr><td class="sys-name">Garage Door Opener — Door 1 (Craftsman)<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Craftsman 1/2 HP chain drive · Sears-era design</span></td><td>~20+ yrs (est.)</td><td>10–15 yrs typical</td><td><div class="hbar"><div class="hfill poor" style="width:15%"></div></div><div class="hlabel poor">End of life</div></td><td style="color:var(--red);font-weight:800;">Replace — see open items</td></tr>
+        <tr><td class="sys-name">Garage Door Opener — Door 2 (Chamberlain)<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Chamberlain B2401 smart belt drive · myQ enabled</span></td><td>New (Jul 2025)</td><td>10–15 yrs</td><td><div class="hbar"><div class="hfill good" style="width:100%"></div></div><div class="hlabel good">New</div></td><td>Lube rollers/hinges/springs 2x/year</td></tr>
+        <tr><td class="sys-name">Garage Doors (panels)<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Two single doors · Appears serviceable at inspection</span></td><td>Unknown</td><td>Indefinite w/ maint.</td><td><div class="hbar"><div class="hfill good" style="width:70%"></div></div><div class="hlabel good">Serviceable</div></td><td>Lube 2x/year; test auto-reverse monthly</td></tr>
+        <tr><td class="sys-name">Wood Deck<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Attached wood deck</span></td><td>Unknown</td><td>15–25 yrs w/ maint.</td><td><div class="hbar"><div class="hfill med" style="width:55%"></div></div><div class="hlabel med">Inspect this spring</div></td><td>Annual inspection + reseal as needed</td></tr>
+        <tr><td class="sys-name">Garage Floor (concrete)<br><span style="font-size:11px;font-weight:600;color:var(--ink3)">Skim coat flaking noted at inspection · Seal status unknown</span></td><td>~1950</td><td>Indefinite w/ maint.</td><td><div class="hbar"><div class="hfill med" style="width:45%"></div></div><div class="hlabel med">Verify seal status</div></td><td>Check if sealed — apply sealer if not</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- COSTS -->
+<div id="panel-costs" class="panel">
+  <div class="cost-grid">
+    <div class="cost-card">
+      <div class="cost-card-head">This Year (excl. roof claim)</div>
+      <div class="cost-lines">
+        <div class="cost-row"><span class="cost-label">Routine maintenance</span><span class="cost-val">$300–500</span></div>
+        <div class="cost-row"><span class="cost-label">HVAC service (Leslie — included)</span><span class="cost-val free">$0 ✓</span></div>
+        <div class="cost-row"><span class="cost-label">Chimney sweep</span><span class="cost-val">$200–350</span></div>
+        <div class="cost-row"><span class="cost-label">2nd floor AC condensate pan</span><span class="cost-val">$300–800</span></div>
+        <div class="cost-row"><span class="cost-label">Washer + dryer replacement</span><span class="cost-val big">$1,500–2,200</span></div>
+        <div class="cost-row"><span class="cost-label">Anti-flood system inspection</span><span class="cost-val">$100–300</span></div>
+        <div class="cost-row"><span class="cost-label">Foundation sealing (DIY)</span><span class="cost-val">$100–300</span></div>
+        <div class="cost-row"><span class="cost-label">Galvanized pipes — plumber eval</span><span class="cost-val">$150–300</span></div>
+        <div class="cost-row"><span class="cost-label">Misc (WH check, basement exhaust)</span><span class="cost-val">$200–400</span></div>
+        <div class="cost-row" style="border-top:1.5px solid var(--border);margin-top:4px;padding-top:10px;"><span class="cost-label" style="font-weight:800;color:var(--ink)">Total (ex-roof)</span><span class="cost-val big" style="font-size:15px;">$3,000–6,000</span></div>
+      </div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-card-head">Roof Claim Scenario</div>
+      <div class="cost-lines">
+        <div class="cost-row"><span class="cost-label">AK Roofing estimate (shingles only)</span><span class="cost-val">$13,200</span></div>
+        <div class="cost-row"><span class="cost-label">Potential add: gutters</span><span class="cost-val">$3,550</span></div>
+        <div class="cost-row"><span class="cost-label">Potential add: skylight</span><span class="cost-val">$1,650</span></div>
+        <div class="cost-row"><span class="cost-label">Potential add: garage roof</span><span class="cost-val">TBD</span></div>
+        <div class="cost-row"><span class="cost-label">Ordinance/Law code upgrades</span><span class="cost-val free">Up to $89,920</span></div>
+        <div class="cost-row" style="border-top:1px dashed var(--border);"><span class="cost-label">Wind/hail deductible (your cost)</span><span class="cost-val big">-$8,992</span></div>
+        <div class="cost-row"><span class="cost-label">Mortgage co-payee on check</span><span class="cost-val" style="font-size:11px;">Union Home Mortgage</span></div>
+        <div class="cost-row" style="border-top:1.5px solid var(--border);margin-top:4px;padding-top:10px;"><span class="cost-label" style="font-weight:800;color:var(--ink)">If ~$15k approved</span><span class="cost-val free" style="font-size:15px;">~$6k covered ✓</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="cost-card" style="margin-bottom:18px;">
+    <div class="cost-card-head">Typical Annual (Going Forward)</div>
+    <div class="cost-lines" style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px;">
+      <div>
+        <div class="cost-row"><span class="cost-label">Routine maintenance</span><span class="cost-val">$300–500</span></div>
+        <div class="cost-row"><span class="cost-label">HVAC — Leslie through 2030</span><span class="cost-val free">$0 ✓</span></div>
+        <div class="cost-row"><span class="cost-label">HVAC — after 2030 (annual tune-up)</span><span class="cost-val">$150–250</span></div>
+        <div class="cost-row"><span class="cost-label">Chimney sweep</span><span class="cost-val">$200–350</span></div>
+      </div>
+      <div>
+        <div class="cost-row"><span class="cost-label">Roof replacement reserve</span><span class="cost-val big">$3,000–5,000</span></div>
+        <div class="cost-row"><span class="cost-label">Galvanized repipe (phased)</span><span class="cost-val big">$2,000–4,000</span></div>
+        <div class="cost-row"><span class="cost-label">Misc repairs</span><span class="cost-val">$500–1,500</span></div>
+        <div class="cost-row" style="border-top:1.5px solid var(--border);margin-top:4px;padding-top:10px;"><span class="cost-label" style="font-weight:800;color:var(--ink)">Typical year</span><span class="cost-val accent">$2,500–4,500</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-head"><span class="section-badge medium">Big Ticket Items on the Horizon</span><div class="section-line"></div></div>
+  <div class="lumpy-card">
+    <div class="lumpy-name">Roof Replacement</div>
+    <div class="lumpy-desc">Insurance claim in progress. If approved: you pay $8,992 deductible, State Farm covers the rest (RCV). If denied: $18k–28k out-of-pocket. State Farm-referred contractors assessing now — claim decision coming soon.</div>
+    <div class="lumpy-chips"><span class="lumpy-chip flag">Claim decision pending</span><span class="lumpy-chip highlight">If denied: $18k–28k</span><span class="lumpy-chip good">If approved: ~$8,992 only</span></div>
+  </div>
+  <div class="lumpy-card">
+    <div class="lumpy-name">Galvanized Supply Pipe Repipe</div>
+    <div class="lumpy-desc">Original 1950 galvanized piping, past end of life. Phase it — kitchen/baths first. Get plumber eval this year to set the plan.</div>
+    <div class="lumpy-chips"><span class="lumpy-chip highlight">Start within 2 years</span><span class="lumpy-chip highlight">$8,000–20,000 total</span><span class="lumpy-chip">Phased over 3–5 yrs</span></div>
+  </div>
+  <div class="lumpy-card">
+    <div class="lumpy-name">Water Heater Replacement</div>
+    <div class="lumpy-desc">Bradford White, ~4 years old. ~8 years of service life remaining. Rust/singe marks at connections — monitor annually.</div>
+    <div class="lumpy-chips"><span class="lumpy-chip">~2029–2033</span><span class="lumpy-chip">$2,000–3,500</span></div>
+  </div>
+  <div class="lumpy-card">
+    <div class="lumpy-name">Refrigerator Replacement</div>
+    <div class="lumpy-desc">Whirlpool Gold, ~10–15 years old. Watch for compressor noise, inconsistent temps, ice maker failures.</div>
+    <div class="lumpy-chips"><span class="lumpy-chip">3–5 years</span><span class="lumpy-chip">$1,200–2,000</span></div>
+  </div>
+</div>
+
+<!-- CLOSED -->
+<div id="panel-closed" class="panel">
+  <div class="section-head" style="margin-top:0;"><span class="section-badge low">Completed Since Move-In</span><div class="section-line"></div></div>
+  <div id="closed-dynamic"></div>
+  <div class="section-head"><span class="section-badge low">Pre-Closing / Pre-Move-In Work</span><div class="section-line"></div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Full HVAC replacement — Rheem heat pump + furnace + humidifier + air purifier ($14,300)</div><div class="closed-date">Dec 2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">All outlets upgraded to 3-prong grounded throughout home + garage GFCI completed</div><div class="closed-date">2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Fireplace chimney liner installed — fireplace now safe to use (~$3,000)</div><div class="closed-date">Pre-closing 2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Main sewer line camera scoped — clean bill of health</div><div class="closed-date">Pre-closing 2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Gas drip leg installed at furnace (Leslie estimate)</div><div class="closed-date">Dec 2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Attic insulation updated — 2nd floor / roof (pre-move-in)</div><div class="closed-date">Pre-move-in 2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">All toilets replaced with new Kohler units throughout home</div><div class="closed-date">Pre-move-in 2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Garage electrical — GFCI + wiring evaluated and updated</div><div class="closed-date">2025</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Flat roof inspected — newer, good condition, not part of insurance claim</div><div class="closed-date">Apr 2026</div></div>
+  <div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">Garage fireplace — non-functional, used for storage, no maintenance required</div><div class="closed-date">Confirmed 2026</div></div>
+</div>
+
+</div>
+<script>
+const ITEMS=[
+  {id:1,priority:'low',name:'2nd Floor AC Condensate — Monitor',timeline:'Each Season',urgent:false,type:'diy',cost:'$0',detail:'Through-wall AC units back into the attic. You\'ve confirmed water evaporates due to attic heat and catch pans are in place underneath. Risk is managed. Action: check the catch pans monthly during cooling season and inspect attic wood annually for any discoloration or staining. No contractor spend needed unless pans start collecting significant water or you see any wood staining.'},
+  {id:2,priority:'high',name:'Washer Replacement',timeline:'This Year',urgent:false,type:'contractor',cost:'$800–1,200',detail:'Kenmore front-load, ~12–18 years old. Inspector flagged excessive mold at drum gasket. At or past end of life. Replace — buy the dryer at the same time as a matched pair.',products:'LG WM4000H (front-load, consistently top-rated, ~$900), Samsung WF53BB8700A (front-load, reliable, ~$850), Maytag MHW5630HW (front-load, simpler controls, strong reliability, ~$800)'},
+  {id:3,priority:'medium',name:'Roof — Insurance Claim Decision',timeline:'This Spring',urgent:true,type:'contractor',cost:'See Roof tab',detail:'Style Exteriors and Calderone Roofing (State Farm-referred) are your pre-claim advisors. After their inspections, decide whether to file. Math works if approval comfortably exceeds $8,992 deductible. See the Roof / Insurance tab for full detail, all four contractor contacts, and the next steps checklist.'},
+  {id:4,priority:'medium',name:'Dryer Replacement (with Washer)',timeline:'This Year',urgent:false,type:'contractor',cost:'$700–1,000',detail:'Kenmore front-load, same vintage as washer. Replace both together as a matched pair.',products:'LG DLGX4001B (gas, pairs with LG washer, ~$900), Samsung DVG54CG7150V (gas, ~$850), Maytag MGD5630HW (gas, simple + durable, ~$750). Confirm gas or electric before ordering.'},
+  {id:5,priority:'medium',name:'Galvanized Pipes — Plumber Eval',timeline:'This Year',urgent:false,type:'contractor',cost:'$150–300 eval',detail:'Original 1950 galvanized supply pipes. Corrodes from inside out. Get a plumber to assess and build a phased repipe plan. Kitchen/baths first. Total repipe: $8k–20k over 3–5 years.'},
+  {id:6,priority:'low',name:'Anti-Flood System — Verify Once',timeline:'This Year',urgent:false,type:'contractor',cost:'$100–200 one-time',detail:'Anti-flood system (backflow preventer/overhead sewer) present. This is a largely passive system — verify it\'s operational once since move-in, then check every 2–3 years or after major plumbing work. NOT an annual expense. One visit to confirm it works and understand the system is all you need right now. Re-inspect if you ever notice any basement moisture or sewage smell after heavy rain.'},
+  {id:7,priority:'medium',name:'Foundation — Seal Efflorescence',timeline:'This Spring',urgent:false,type:'diy',cost:'$100–300',detail:'Efflorescence on foundation walls; moisture stains on west wall (dry at inspection). Clean deposits, apply hydraulic cement to cracks, coat with masonry waterproof sealer. Monitor west wall year one.',products:'Cleaner: QUIKRETE Efflorescence Cleaner (~$12). Crack filler: QUIKRETE Hydraulic Cement (~$10). Sealer: Drylok Extreme Masonry Waterproofer (~$35/gal, covers ~$100–150 sq ft).'},
+  {id:8,priority:'medium',name:'Verify Rheem Warranty Registration',timeline:'ASAP',urgent:true,type:'diy',cost:'$0',detail:'10-year parts warranty required registration within 90 days of Dec 2025 install. If missed, defaults to 5 years. Call Leslie at 630-985-9800 or check rheem.com/warranties. Free 5-minute task.'},
+  {id:9,priority:'low',name:'Water Heater — Inspect Pipe Connections',timeline:'This Year',urgent:false,type:'diy',cost:'$0–200',detail:'Rust/singe marks at pipe connections noted at inspection. Gas drip leg installed. Visual check to confirm no active corrosion or heat damage.',products:'Inspection mirror: Fotodiox Flexible Inspection Mirror (~$8) to see pipe backs without contorting. Pipe repair: if you spot a small leak, Rescue Tape self-fusing silicone (~$8) as a temporary fix while you call a plumber. Gas leak detector: Gas Leak Detector Pen (~$15, sniff around connections — gives peace of mind on the gas side).'},
+  {id:10,priority:'low',name:'Refrigerator — Monitor',timeline:'3–5 Years',urgent:false,type:'diy',cost:'$1,200–2,000 future',detail:'Whirlpool Gold Series French door, ~10–15 years old. Watch for compressor noise, inconsistent temps, ice maker problems. No action now.',products:'When ready: LG LRMVS3006S (French door, reliable, ~$1,400), Whirlpool WRF535SWHZ (direct replacement style, ~$1,200), Samsung RF28BB6900M (French door, ~$1,500).'},
+  {id:11,priority:'low',name:'Basement East Window',timeline:'Non-Urgent',urgent:false,type:'diy',cost:'$50–400',detail:'Broken thermal seal — fogging between glass layers (cosmetic, still functional). Damaged crank handle. Address when convenient.',products:'Crank handle: search your window brand + "casement crank handle" on Amazon ($10–20). Window glass unit replacement: local glass shop will measure and order ($100–300 for just the glass unit).'},
+  {id:12,priority:'low',name:'Basement Bathroom Exhaust Fan',timeline:'Soon',urgent:false,type:'diy',cost:'$50–150',detail:'Disconnected exhaust vent. Reconnect or reroute to exhaust outside — DIY/handyman level.',products:'Panasonic FV-0511VQ1 (whisper-quiet, energy-star, ~$65 — best bang for buck), Broan-NuTone 688 (basic + cheap, ~$20 if just reconnecting existing), Hunter 90052 (~$45, good middle option).'},
+  {id:13,priority:'medium',name:'Craftsman Garage Door Opener — Replace',timeline:'This Year',urgent:false,type:'contractor',cost:'$200–400 installed',detail:'The original Craftsman 1/2 HP chain drive opener is ~20+ years old based on its design era. End of life — noisy, parts scarce. Door 2 already has a Chamberlain B2401. Replace door 1 with the same model for consistency, quieter belt drive, and myQ smart access on both doors. DIY-capable if comfortable with basic wiring (~2 hrs).',products:'Chamberlain B2401 Smart Belt Drive (~$199 on Amazon — matches door 2 exactly). If you want to hire install: most garage door companies charge $75–150 labor.'},
+  {id:14,priority:'low',name:'Deck — Annual Inspection + Stain/Seal',timeline:'This Spring',urgent:false,type:'diy',cost:'$50–300',detail:'Wood deck requires annual inspection each spring. Check boards for soft spots/rot; check ledger board connection to house (failure point for deck collapses); check post bases for rot. If water no longer beads on surface, clean and reseal. Do this before summer entertaining season.',products:'Cleaner: Defy Deck Cleaner (~$20). Stain/sealer: Defy Extreme Wood Stain (~$50/gal, excellent for Chicago winters), or Armstrong Clark Deck Stain (~$55/gal, top-rated penetrating stain). Apply with a pump sprayer + roller.'},
+  {id:15,priority:'low',name:'Garage Floor — Check and Seal',timeline:'This Year',urgent:false,type:'diy',cost:'$30–150',detail:'Inspection flagged flaking skim coat. Unknown if sealed. Test: pour water on floor — if it soaks in, it\'s unsealed. Unsealed concrete absorbs road salt and moisture, accelerating spalling through Chicago winters.',products:'Basic sealer: Foundation Armor SX5000 (~$60/gal, penetrating silane-siloxane, lasts 5–7 yrs). Epoxy coating: Rust-Oleum RockSolid Polycuramine kit (~$100 for 1-car, very durable). For just the flaking areas: QUIKRETE Concrete Resurfacer (~$25 a bag).'},
+  {id:16,priority:'low',name:'Garage Wall — Tuckpointing (Step Cracks)',timeline:'Within 1–2 Years',urgent:false,type:'diy',cost:'$50–200 DIY / $500–1,500 contractor',detail:'Inspection noted settlement gaps and step cracks in garage masonry walls with mortar repairs recommended. Step cracks in a 1950 masonry garage are common from freeze-thaw cycles. Cost to ignore: water infiltrates cracks, cycles through winter, and accelerates wall spalling — eventually a $3k–8k structural repair. Fix now is $50–200 DIY or $500–1,500 contractor. Do within 1–2 years.',products:'DIY: QUIKRETE Pre-Mixed Mortar Repair (~$8/tube, caulk-gun application for small cracks), or QUIKRETE Mortar Mix (~$12/bag + grinder for proper tuckpointing). Bonding agent: QUIKRETE Concrete Bonding Adhesive (~$10) applied first improves adhesion significantly.'},
+];
+const SEASONAL={
+  spring:[
+    {id:'sp1',name:'Style Exteriors inspection (scheduled)',why:'State Farm-referred — pre-claim read + assess garage, gutters, skylight.',cost:'$0',type:'contractor'},
+    {id:'sp2',name:'Schedule Calderone Roofing (708-596-0955)',why:'Second State Farm-referred opinion before deciding whether to file.',cost:'$0',type:'contractor'},
+    {id:'sp3',name:'Check 2nd floor AC catch pans',why:'Confirm pans are properly positioned before first cooling season use. Check monthly in summer.',cost:'$0',type:'diy'},
+    {id:'sp4',name:'Anti-flood system — verify operation (one-time)',why:'Confirm system is working since move-in. Not an annual expense — check once now, then every 2–3 years.',cost:'$100–200',type:'contractor'},
+    {id:'sp5',name:'Clean gutters + check downspouts',why:'Post-winter blockage causes water to pool against foundation.',cost:'$0',type:'diy',products:'Gutter scoop: Amerimax Gutter Getter (~$8). Flush hose: Orbit Telescoping Wand (~$18). Optional ongoing solution: Amerimax Lock-In Gutter Guard (~$1.50/ft) keeps debris out year-round.'},
+    {id:'sp6',name:'Seal foundation efflorescence (west wall)',why:'Clean + apply waterproof sealer. Prevents seepage from worsening.',cost:'$100–300',type:'diy',products:'Cleaner: QUIKRETE Efflorescence Cleaner (~$12). Crack filler: QUIKRETE Hydraulic Cement (~$10). Sealer: Drylok Extreme Masonry Waterproofer (~$35/gal, covers ~100-150 sq ft).'},
+    {id:'sp7',name:'Turn on hose bibs, check for freeze damage',why:'Check for cracks before running at full pressure.',cost:'$0',type:'diy',products:'Frost-proof replacement bib if cracked: Woodford Model 22 (~$18, widely available). Teflon tape for minor fitting leaks (~$3). Hose bib cover for next winter: Frost King FC3 foam cover (~$4 each).'},
+    {id:'sp8',name:'Service humidifier',why:'Clean water panel, flush drain — stagnant water grows mold.',cost:'$15–30',type:'diy',products:'Replacement water panel: search your specific Rheem humidifier model number on Amazon — Tier1 makes compatible aftermarket panels (~$12). Humidifier cleaner: CLR Calcium-Lime-Rust Remover (~$7) to flush housing and drain line. White vinegar also works for scale buildup.'},
+    {id:'sp9',name:'Inspect + re-caulk exterior',why:'Winter movement cracks seals at windows, doors, and penetrations.',cost:'$20–50',type:'diy',products:'Paintable interior/trim caulk: DAP Alex Plus (~$5/tube). Exterior silicone for gaps needing flex: GE Advanced Silicone 2 Window and Door (~$8/tube, best for Chicago winters). Caulk removal tool: Homax Caulk Remover (~$6). Quality caulk gun: Dripless ETS2000 (~$15) — worth it vs. $3 guns.'},
+    {id:'sp10',name:'Document roof condition with photos',why:'Baseline for insurance claim and future disputes.',cost:'$0',type:'diy'},
+    {id:'sp11',name:'Inspect wood deck — boards, ledger, post bases',why:'Spring is the time to catch winter damage. Ledger board failure is the #1 cause of deck collapses.',cost:'$0',type:'diy',products:'Rot probe: use an awl or ice pick (~$5) — soft wood = rot. Wood hardener for early rot: Minwax High Performance Wood Hardener (~$12). Post base hardware if rusted: Simpson Strong-Tie ABA44Z (~$8/each). Ledger bolts if loose: Simpson SDS screws (~$18/box of 50).'},
+    {id:'sp12',name:'Garage door lubrication — both doors',why:'Annual lube on rollers, hinges, springs, and tracks prevents wear and reduces opener strain. Use white lithium grease or silicone spray — NOT WD-40.',cost:'$5–15',type:'diy',products:'WD-40 Specialist White Lithium Grease (~$6, spray can — use on hinges, rollers, springs). 3-IN-ONE Garage Door Lube (~$7 — silicone-based, good all-around). Do NOT use regular WD-40 — attracts dirt and gums up.'},
+    {id:'sp13',name:'Test garage door auto-reverse on both doors',why:'Safety requirement. Place a 2x4 flat on the ground — door should reverse on contact. Test monthly per inspection report.',cost:'$0',type:'diy'},
+  ],
+  summer:[
+    {id:'su1',name:'Check 2nd floor AC catch pans (monthly)',why:'Water evaporates due to attic heat but confirm pans aren\'t accumulating. Look for staining on attic wood near units.',cost:'$0',type:'diy'},
+    {id:'su2',name:'Attic check after first hot stretch',why:'Confirm no moisture from condensate. Look for stains or wet insulation.',cost:'$0',type:'diy'},
+    {id:'su3',name:'Trim trees away from roof/gutters',why:'Storm damage prevention + slows moss growth on aging shingles.',cost:'$0–500',type:'diy',products:'DIY pruning: Fiskars 7.2-ft Extendable Tree Pruner (~$50, handles branches up to 1.25-inch diameter). For larger branches: Corona RazorTOOTH Folding Saw (~$25). For significant limb removal near the roof, hire an ISA-certified arborist — worth it vs. roof damage risk.'},
+    {id:'su4',name:'Walk exterior after heavy rain',why:'Check for pooling near foundation. West wall moisture is a watch item.',cost:'$0',type:'diy'},
+    {id:'su5',name:'HVAC filter check (monthly)',why:'Peak cooling load clogs filters faster on the new Rheem system.',cost:'$20–40',type:'diy',products:'Rheem R802V uses a standard 1-inch filter at the return air opening. Size: measure your return air grille opening. Nordic Pure MERV 12 pleated filters (~$8–12 each, Amazon Subscribe and Save saves ~15%) — MERV 12 is the sweet spot for the new system, don\'t go MERV 13+ without checking with Leslie as it can reduce airflow. Buy a 6-pack to have on hand.'},
+    {id:'su6',name:'Deck — reseal/restain if needed',why:'Best done in summer dry weather. If water no longer beads on surface, clean and reseal to prevent UV damage and rot.',cost:'$50–300',type:'diy',products:'Cleaner first: Defy Deck Cleaner (~$20/concentrate). Stain/sealer: Defy Extreme Wood Stain (~$50/gal, penetrating, excellent for freeze-thaw), or Armstrong Clark Deck Stain (~$55/gal, top-rated by deck forums). Apply with Wooster Brush Shortcut Angle Sash (~$8) and a pump garden sprayer (~$15).'},
+  ],
+  fall:[
+    {id:'fa1',name:'Clean gutters (post leaf-drop)',why:'Non-negotiable. Clogged gutters → ice dams → $3k–10k damage.',cost:'$0',type:'diy',products:'Same as spring: Amerimax Gutter Getter scoop (~$8). Leaf blower with gutter kit: Toro Universal Gutter Cleaning Kit (~$20) if you prefer blowing over scooping. Downspout flush: Orbit Telescoping Wand (~$18).'},
+    {id:'fa2',name:'HVAC annual tune-up — call Leslie 630-985-9800',why:'Covered through Dec 2030. Required to maintain 10-yr Rheem warranty.',cost:'$0 (covered)',type:'contractor'},
+    {id:'fa3',name:'Chimney sweep',why:'Annual requirement — sweep before first fire of season.',cost:'$200–350',type:'contractor'},
+    {id:'fa4',name:'Shut off + drain exterior hose bibs',why:'Prevents burst pipe inside walls.',cost:'$0',type:'diy'},
+    {id:'fa5',name:'Seal new foundation cracks',why:'Last chance before freeze-thaw. Water in a crack expands 9% when frozen.',cost:'$20–50',type:'diy',products:'Small cracks (hairline): Loctite PL Concrete Crack and Masonry Sealant (~$8/tube, paintable, flexible). Larger cracks: QUIKRETE Hydraulic Cement (~$10). Bonding agent first: QUIKRETE Concrete Bonding Adhesive (~$10) improves adhesion significantly on older concrete.'},
+    {id:'fa6',name:'Test smoke + CO detectors',why:'Heating season + gas fireplace + furnace = higher CO risk.',cost:'$10–60',type:'diy',products:'Combo smoke + CO detector: Kidde 10-Year Sealed Battery Combination Detector (~$35, no battery replacement for 10 yrs — best for convenience). Standalone CO detector: Kidde Nighthawk Plug-In with backup (~$30). Replace any unit over 7 years old. Smoke detectors: 10-year lifespan. CO detectors: 5–7 years.'},
+    {id:'fa7',name:'Humidifier startup — replace water panel',why:'Target 35–45% RH in winter. Check for scale buildup.',cost:'$15–30',type:'diy',products:'Replacement water panel: search your Rheem humidifier model number — Tier1 aftermarket panels (~$12, check compatibility). Hygrometer to monitor RH: ThermoPro TP50 Indoor Humidity Monitor (~$10 — put one near the thermostat). Target 35–45% RH during heating season.'},
+    {id:'fa8',name:'Roof visual check + document condition',why:'Annual post-summer photo baseline. Important for future storm claims.',cost:'$0',type:'diy'},
+    {id:'fa9',name:'Garage door lubrication — both doors',why:'Second annual lube before cold season. Cold temps make dry metal components louder and more prone to wear.',cost:'$5–15',type:'diy',products:'WD-40 Specialist White Lithium Grease (~$6). 3-IN-ONE Garage Door Lube (~$7). Apply to hinges, rollers, springs, and along the inside of the track — not on the track itself. Do NOT use regular WD-40.'},
+    {id:'fa10',name:'Deck — final inspection before winter',why:'Check for any new rot, loose fasteners, or cracked boards before freeze-thaw cycles hit. Make repairs while temps are above 50°F.',cost:'$0',type:'diy',products:'Deck screws for loose boards: GRK R4 Multi-Purpose Screws (~$15/box) — self-countersinking, no pre-drill needed. Wood hardener for soft spots: Minwax High Performance Wood Hardener (~$12). Cover boards if staining is fresh: allow full cure before winter.'},
+  ],
+  winter:[
+    {id:'wi1',name:'HVAC filter check (every 30–60 days)',why:'Peak heating load clogs filter faster on the new system.',cost:'$20–40',type:'diy',products:'Nordic Pure MERV 12 pleated filter — same size as summer. Buy a 6-pack on Amazon Subscribe and Save (~$8–12 each). Swap when gray/loaded, or on a calendar schedule every 30 days during heavy heating season.'},
+    {id:'wi2',name:'Monitor basement west wall',why:'Old moisture stains — watch for new activity after snow melt.',cost:'$0',type:'diy'},
+    {id:'wi3',name:'Attic check after heavy snow',why:'Look for ice dam formation and condensate moisture.',cost:'$0',type:'diy'},
+    {id:'wi4',name:'Keep 55°F minimum if traveling',why:'Critical with galvanized pipes — less tolerant of temperature swings.',cost:'$0',type:'diy',products:'Smart thermostat remote monitoring: your new Rheem system is EcoNet-enabled — download the EcoNet app to monitor and adjust temp remotely from anywhere. Back it up with a cheap WiFi temp sensor: Govee Temperature Humidity Sensor (~$12) with app alerts if temp drops below threshold.'},
+    {id:'wi5',name:'Check humidifier water panel mid-season',why:'Scale buildup reduces efficiency. Hard water may need two panels.',cost:'$0–30',type:'diy',products:'Replacement panel: Tier1 aftermarket (~$12, search your model). Descale the housing: white vinegar soak for 30 min. ThermoPro TP50 hygrometer (~$10) tells you if your RH is actually hitting 35–45% — if it\'s below 30% the panel may be clogged.'},
+  ],
+};
+let completedItems=[];let completedSeasonal=[];let completedNS=[];let expanded=null;
+try{completedItems=JSON.parse(localStorage.getItem('hm_items')||'[]');}catch(e){}
+try{completedSeasonal=JSON.parse(localStorage.getItem('hm_seasonal')||'[]');}catch(e){}
+try{completedNS=JSON.parse(localStorage.getItem('hm_ns')||'[]');}catch(e){}
+function save(){try{localStorage.setItem('hm_items',JSON.stringify(completedItems));localStorage.setItem('hm_seasonal',JSON.stringify(completedSeasonal));localStorage.setItem('hm_ns',JSON.stringify(completedNS));}catch(e){}}
+function renderDashboard(){
+  const active=ITEMS.filter(i=>!completedItems.includes(i.id));
+  const high=active.filter(i=>i.priority==='high');
+  const med=active.filter(i=>i.priority==='medium');
+  const low=active.filter(i=>i.priority==='low');
+  const spring=active.filter(i=>['Before First AC','This Spring','ASAP'].some(k=>i.timeline.includes(k)));
+  document.getElementById('stat-open').textContent=active.length;
+  document.getElementById('stat-high-sub').textContent=high.length+' high priority';
+  document.getElementById('stat-spring').textContent=spring.length;
+  document.getElementById('stat-closed').textContent=completedItems.length+10;
+  renderList('list-high',high);renderList('list-medium',med);renderList('list-low',low);
+}
+function renderList(id,items){
+  const el=document.getElementById(id);
+  if(!items.length){el.innerHTML='<div class="empty">All clear here 🎉</div>';return;}
+  el.innerHTML=items.map(item=>{
+    const tlClass=item.urgent?'urgent':item.priority==='medium'?'soon':'';
+    const isExp=expanded===item.id;
+    const isDone=completedItems.includes(item.id);
+    const safeP=item.products?(item.products.replace(/\\/g,'\\\\').replace(/'/g,"\\'")):'';
+    const tip=item.products?'<span class="tooltip-btn" id="tb-'+item.id+'" onmouseenter="showTT(event,\''+safeP+'\')" onmouseleave="hideTT()" onclick="event.stopPropagation();toggleDrop(\'drop-'+item.id+'\',\'tb-'+item.id+'\')">🛒 Products</span>':'';
+    const drop=item.products?'<div class="prod-dropdown" id="drop-'+item.id+'"><div class="prod-dropdown-header"><span class="prod-dropdown-title">💡 Suggested Products</span><button class="prod-copy-btn" onclick="copyProd(\'drop-'+item.id+'\',this)">Copy list</button></div><div class="prod-text">'+item.products+'</div></div>':'';
+    return'<div class="item-card '+item.priority+(isExp?' expanded':'')+(isDone?' done':'')+'" onclick="doExpand('+item.id+')" style="'+(isDone?'opacity:0.45;pointer-events:none;':'')+'">'+
+      '<div class="item-top">'+
+      '<div class="item-cb'+(isDone?' checked':'')+'" onclick="event.stopPropagation();toggleItem('+item.id+')">'+(isDone?'✓':'')+'</div>'+
+      '<div><div class="item-name">'+item.name+(isDone?'':tip)+'</div>'+(!isExp?'<div class="item-snippet">'+item.detail.slice(0,72)+'…</div>':'')+'</div>'+
+      '<span class="pill '+item.type+'">'+(item.type==='diy'?'DIY':'Contractor')+'</span>'+
+      '<span class="pill timeline '+tlClass+'">'+item.timeline+'</span>'+
+      '<span class="cost-pill">'+item.cost+'</span>'+
+      '</div>'+
+      drop+
+      '<div class="item-detail-body">'+item.detail+'</div>'+
+      '</div>';
+  }).join('');
+}
+function doExpand(id){expanded=expanded===id?null:id;renderDashboard();}
+function toggleItem(id){
+  if(completedItems.includes(id))completedItems=completedItems.filter(i=>i!==id);
+  else completedItems.push(id);
+  save();renderDashboard();renderClosed();
+}
+function renderSeasonal(){
+  Object.entries(SEASONAL).forEach(([s,tasks])=>{
+    const el=document.getElementById('st-'+s);if(!el)return;
+    el.innerHTML=tasks.map(t=>{
+      const done=completedSeasonal.includes(t.id);
+      const safeP=t.products?(t.products.replace(/\\/g,'\\\\').replace(/'/g,"\\'")):'';
+      const tip=t.products?'<span class="tooltip-btn" id="tb-'+t.id+'" onmouseenter="showTT(event,\''+safeP+'\')" onmouseleave="hideTT()" onclick="event.stopPropagation();toggleDrop(\'drop-'+t.id+'\',\'tb-'+t.id+'\')">🛒 Products</span>':'';
+      const drop=t.products?'<div class="prod-dropdown" id="drop-'+t.id+'"><div class="prod-dropdown-header"><span class="prod-dropdown-title">💡 Suggested Products</span><button class="prod-copy-btn" onclick="copyProd(\'drop-'+t.id+'\',this)">Copy list</button></div><div class="prod-text">'+t.products+'</div></div>':'';
+      return'<div class="season-task" style="flex-wrap:wrap;">'+
+        '<div class="stcb'+(done?' checked':'')+'" onclick="toggleSeasonal(\''+t.id+'\')">'+(done?'✓':'')+'</div>'+
+        '<div style="'+(done?'opacity:0.45;text-decoration:line-through;text-decoration-color:var(--ink4);':'')+'">'+
+        '<div class="st-name">'+t.name+tip+'</div>'+
+        '<div class="st-why">'+t.why+'</div></div>'+
+        '<span class="pill '+t.type+'" style="margin-top:2px;">'+(t.type==='diy'?'DIY':'Contractor')+'</span>'+
+        '<span class="st-cost">'+t.cost+'</span>'+
+        (drop?'<div style="grid-column:1/-1;padding-top:4px;">'+drop+'</div>':'')+
+        '</div>';
+    }).join('');
+  });
+}
+function toggleSeasonal(id){
+  if(completedSeasonal.includes(id))completedSeasonal=completedSeasonal.filter(i=>i!==id);
+  else completedSeasonal.push(id);
+  save();renderSeasonal();
+}
+function toggleNS(id){
+  const el=document.getElementById(id);if(!el)return;
+  if(completedNS.includes(id)){completedNS=completedNS.filter(i=>i!==id);el.classList.remove('checked');el.textContent='';}
+  else{completedNS.push(id);el.classList.add('checked');el.textContent='✓';}
+  save();
+}
+function initNS(){['rs1','rs2','rs3','rs4','rs5','rs6','rs7'].forEach(id=>{const el=document.getElementById(id);if(!el)return;if(completedNS.includes(id)){el.classList.add('checked');el.textContent='✓';}});}
+function renderClosed(){
+  const el=document.getElementById('closed-dynamic');
+  const done=ITEMS.filter(i=>completedItems.includes(i.id));
+  const today=new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  el.innerHTML=done.length?done.map(i=>'<div class="closed-item"><div class="closed-check">✓</div><div class="closed-name">'+i.name+'</div><div class="closed-date">'+today+'</div></div>').join(''):'';
+}
+function switchTab(tab,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+const TT=document.getElementById('tt-global');
+function showTT(e,text){
+  TT.innerHTML=text;
+  TT.style.display='block';
+  const btn=e.currentTarget;
+  const r=btn.getBoundingClientRect();
+  const W=window.innerWidth;
+  let left=r.left;
+  const tipW=280;
+  if(left+tipW>W-12)left=W-tipW-12;
+  if(left<12)left=12;
+  let top=r.top-8;
+  TT.style.left=left+'px';
+  TT.style.top=top+'px';
+  TT.style.transform='translateY(-100%)';
+}
+function hideTT(){TT.style.display='none';}
+function toggleDrop(dropId,btnId){
+  hideTT();
+  const drop=document.getElementById(dropId);
+  const btn=document.getElementById(btnId);
+  if(!drop)return;
+  const isOpen=drop.classList.contains('open');
+  // close all other dropdowns first
+  document.querySelectorAll('.prod-dropdown.open').forEach(d=>{d.classList.remove('open');});
+  document.querySelectorAll('.tooltip-btn.active').forEach(b=>{b.classList.remove('active');});
+  if(!isOpen){drop.classList.add('open');if(btn)btn.classList.add('active');}
+}
+function copyProd(dropId,copyBtn){
+  const drop=document.getElementById(dropId);
+  if(!drop)return;
+  const text=drop.querySelector('.prod-text').innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    copyBtn.textContent='Copied ✓';
+    copyBtn.classList.add('copied');
+    setTimeout(()=>{copyBtn.textContent='Copy list';copyBtn.classList.remove('copied');},2000);
+  }).catch(()=>{
+    // fallback for non-https
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    copyBtn.textContent='Copied ✓';copyBtn.classList.add('copied');
+    setTimeout(()=>{copyBtn.textContent='Copy list';copyBtn.classList.remove('copied');},2000);
+  });
+}
+// close dropdown on outside click
+document.addEventListener('click',function(e){
+  if(!e.target.classList.contains('tooltip-btn')&&!e.target.classList.contains('prod-copy-btn')){
+    document.querySelectorAll('.prod-dropdown.open').forEach(d=>d.classList.remove('open'));
+    document.querySelectorAll('.tooltip-btn.active').forEach(b=>b.classList.remove('active'));
+  }
+});
+document.getElementById('current-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric',year:'numeric'});
+renderDashboard();renderSeasonal();initNS();renderClosed();
+</script>
+</body>
+</html>
